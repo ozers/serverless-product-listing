@@ -9,13 +9,21 @@ if (typeof redisClient === 'undefined') {
 
 
 const getProducts = async ({page, limit}) => {
-    return redisClient.zrevrange('products', parseInt(page), parseInt(limit))
+    const start = parseInt(page) * parseInt(limit);
+    const stop = start + parseInt(limit) - 1
+    return redisClient.zrange('products', start, stop)
 }
+
+// const getProductsWithPrice = async({page, limit}) => {
+//     const start = parseInt(page) * parseInt(limit);
+//     const stop = start + parseInt(limit) - 1
+//     return redisClient.zrangebyscore('products', 0, 99,'withscores',limit)
+// }
 
 exports.lambdaHandler = async (event, context) => {
     try {
-        const {limit,page} = JSON.parse(event.body);
-        const allProducts = await getProducts({limit,page});
+        const {limit, page} = event.body;
+        const allProducts = await getProducts({limit, page});
         return {
             'statusCode': 200,
             'body': allProducts
