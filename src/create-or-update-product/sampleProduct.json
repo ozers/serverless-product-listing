@@ -1,0 +1,20 @@
+{
+  "name": "Bose Soundbar 300 TV Ses Sistemi, Siyah",
+  "price": 10.099,
+  "description": "Akustik performans: Beş tam-kapsamlı sürücü TV'nize, filmlerinize, oyunlarınıza ve daha fazlasına mükemmel sesi katmak için geniş sahneli ve net ses üretir",
+  "currency": "TRY",
+  "seller_id": "abh63gsq74i",
+  "in_stock": true,
+  "delivery_options": [
+    {
+      "name": "Yurtiçi Kargo",
+      "price": 9.99,
+      "currency": "TRY"
+    },
+    {
+      "name": "MNG KARGO",
+      "price": 8.11,
+      "currency": "TRY"
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  aws-sam-product-listing
+
+  Sample SAM Template for aws-sam-product-listing
+  
+Globals:
+  Function:
+    Timeout: 3
+Resources:
+  ProductListingApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+  CreateProductFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/create-or-update-product/
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref ProductDDBTable
+      Environment:
+        Variables:
+          PRODUCT_TABLE: !Ref ProductDDBTable
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /create-or-update-product
+            Method: post
+            RestApiId:
+              Ref: ProductListingApi
+  FetchProductDetailFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/fetch-product-detail/
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref ProductDDBTable
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /fetch-product-detail
+            Method: post
+            RestApiId:
+              Ref: ProductListingApi
+  ListProductsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/list-products/
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /list-products
+            Method: post
+            RestApiId:
+              Ref: ProductListingApi
+  ProductDDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: productDetailsTable
+      AttributeDefinitions:
+        - AttributeName: name
+          AttributeType: S
+        - AttributeName: seller_id
+          AttributeType: S
+        - AttributeName: price
+          AttributeType: N
+      KeySchema:
+        - AttributeName: name
+          KeyType: HASH
+        - AttributeName: seller_id
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+      GlobalSecondaryIndexes:
+        - IndexName: priceIndex
+          KeySchema:
+            - AttributeName: price
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
+Outputs:
+  ProductListingApi:
+    Description: "API Gateway endpoint URL for Prod stage for Product Listing"
+    Value: !Sub "https://${ProductListingApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/products"
+  CreateProductFunction:
+    Description: "Create Product Detail Lambda Function ARN"
+    Value: !GetAtt CreateProductFunction.Arn

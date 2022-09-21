@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "productListing"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-die7kdgiz2c4"
+s3_prefix = "productListing"
+region = "eu-west-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
+parameter_overrides = "AccessControlAllowOrigin=\"'*'\" AccessControlAllowHeaders=\"'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'\" AccessControlAllowMethods=\"'*'\""
