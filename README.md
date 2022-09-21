@@ -7,6 +7,10 @@ https://gist.github.com/ozers/72f5661144d46f258e63a921b92ac28b.js
 * src/fetch-product-detail -> Product'la iliskili name + seller_id kullanilarak bulunan product bilgilerini Redis uzerinden doner, Redis'te kayit olmamasi durumunda Dynamo'da kaydin olup olmadigini kontrol eder. Kayit varsa Redis'e bu kaydi ekler.
 * src/list-products -> Belirtilen miktardaki product array'ini Redis uzerinden doner. `price` alaniyla siralanmis sekilde donus opsiyonu vardir (tamamlanamadi)
 
+# Upstash
+Geliştirmede Redis olarak Upstash'i kullandım. DB bilgilerini .env dosyasına yazdım. Şu anda .env dosyasında sample olarak duruyor, projeyi sildikten sonra bu DB'yi sildim. Redis için Upstash üzerinden Tablo oluşturulup connection bilgileri .env üzerinden alınmalıdır.
+Buradaki bilgiler güvenlik açısından sorun yaratacağı ihtimaline karşılık bilgiler Secret Manager'da tanımlanıp buradan kullanılabilir.
+
 # Proje Kurulumu
 
 ```bash
