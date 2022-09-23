@@ -32,7 +32,7 @@ const addProductToRedis = async ({product}) => {
 
 exports.lambdaHandler = async (event, context) => {
     try {
-        const product = JSON.parse(event.body)
+        const product = event.body
 
         await createOrUpdateDDBProduct({product})
         await addProductToRedis({product})

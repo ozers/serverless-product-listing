@@ -60,7 +60,7 @@ exports.lambdaHandler = async (event, context) => {
         const {
             name,
             seller_id
-        } = JSON.parse(event.body)
+        } = event.body
 
         const fetchedProduct = await fetchProductFromRedis({name, seller_id});
 
