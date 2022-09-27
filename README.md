@@ -1,8 +1,9 @@
 # serverless-product-listing
 
-# Gelistirmede kullanilan product array'ini iceren gist linki
-https://gist.github.com/ozers/72f5661144d46f258e63a921b92ac28b.js
+# Sample product array for test
+[https://gist.github.com/ozers/72f5661144d46f258e63a921b92ac28b.js](https://gist.github.com/ozers/72f5661144d46f258e63a921b92ac28b)
 
+# APIs 
 * src/create-or-update-products -> Eklenmesi/guncellenmesi istenen product object'ini Dynamodb ve Redis uzerine ekler/gunceller.
 * src/fetch-product-detail -> Product'la iliskili name + seller_id kullanilarak bulunan product bilgilerini Redis uzerinden doner, Redis'te kayit olmamasi durumunda Dynamo'da kaydin olup olmadigini kontrol eder. Kayit varsa Redis'e bu kaydi ekler.
 * src/list-products -> Belirtilen miktardaki product array'ini Redis uzerinden doner. `price` alaniyla siralanmis sekilde donus opsiyonu vardir (tamamlanamadi)
